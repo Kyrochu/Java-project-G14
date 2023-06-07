@@ -59,6 +59,11 @@ public class Package_Price_CASE
                          Aprice=300.00;
                          Cprice=210.00;
                          break;
+
+                default:Package="Unknown Package";
+                        Duration="Unknown Duration";
+                        Aprice=0;
+                        Cprice=0;
             }
         }
         catch(FileNotFoundException e)

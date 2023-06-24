@@ -76,14 +76,14 @@ public class calculate extends JFrame
 
         add(packageLabel);
         add(packageComboBox);
-        add(Atext);
-        add(numa);
-        add(Ctext);
-        add(numc);
         add(priceLabel);
         add(selectButton);
         add(selectedPackageLabel);
         add(selectedPackageTextArea);
+        add(Atext);
+        add(numa);
+        add(Ctext);
+        add(numc);
 
         setVisible(true);
 

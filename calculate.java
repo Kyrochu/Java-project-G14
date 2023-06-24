@@ -34,7 +34,7 @@ public class calculate extends JFrame
     public calculate() {
 
         setTitle("Travel Packages");
-        setSize(400, 300);
+        setSize(700, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
@@ -50,6 +50,27 @@ public class calculate extends JFrame
         selectButton = new JButton("Select");
         selectedPackageTextArea = new JTextArea(8, 30);
         selectedPackageTextArea.setEditable(false);
+
+        JMenuBar menuBar = new JMenuBar();
+        
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem openItem = new JMenuItem("Open");
+        JMenuItem saveItem = new JMenuItem("Save");
+        fileMenu.add(openItem);
+        fileMenu.add(saveItem);
+        
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem cutItem = new JMenuItem("Cut");
+        JMenuItem copyItem = new JMenuItem("Copy");
+        JMenuItem pasteItem = new JMenuItem("Paste");
+        editMenu.add(cutItem);
+        editMenu.add(copyItem);
+        editMenu.add(pasteItem);
+        
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+        
+        setJMenuBar(menuBar);
 
         
 
@@ -90,7 +111,7 @@ public class calculate extends JFrame
                         "MYR\nPrice for Child: " + total_c + 
                         "MYR\nDuration: 4D3N" + 
                         "\nThe total Price: " + total_num
-                        
+
                     );
                 }
 

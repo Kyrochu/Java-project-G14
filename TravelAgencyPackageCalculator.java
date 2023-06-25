@@ -43,9 +43,10 @@ public class TravelAgencyPackageCalculator extends JFrame
     public TravelAgencyPackageCalculator() 
     {
         Font f1 = new Font("Dialog", Font.BOLD | Font.ITALIC, 30); // SET FONT
+        Font f2 = new Font("Serif", Font.BOLD, 26);
 
         setTitle("Travel Agency Package Calculator");
-        setSize(700, 1000);
+        setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -54,7 +55,9 @@ public class TravelAgencyPackageCalculator extends JFrame
         MainTitle = new JLabel("Travelling Packages Calculator For You");
         MainTitle.setFont(f1);
 
-        SpecialOfferLabel = new JLabel("Special Offers");
+        SpecialOfferLabel = new JLabel("<html><u>SPECIAL OFFERS</u></html>");
+        SpecialOfferLabel.setFont(f2);
+        SpecialOfferLabel.setForeground(Color.BLUE);
 
         packageLabel = new JLabel("Packages:");
         selectedPackageLabel = new JLabel("Selected Package:");
@@ -65,7 +68,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         vehicleLabel = new JLabel("Transportation for rent:");
         cardetail = new JTextArea(6, 30);
         TransPriceLabel = new JLabel("Transportation price:");
-        cardetail.setText("1.Van -  RM 1800\n\n2.MPV Car -   RM 1200\n\n3.None");
+        cardetail.setText("1.Comfort Van (8-Seater) -  RM 1800\n\n2.MPV Car -   RM 1200\n\n3.None");
         cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Calculate");
@@ -74,7 +77,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         resit = new JTextArea(8, 20);
         resit.setEditable(false);
 
-        bt1 = new JRadioButton("Van");
+        bt1 = new JRadioButton("Comfort Van (8-Seater)");
         bt2 = new JRadioButton("MPV Car");
         bt3 = new JRadioButton("None");
 
@@ -111,7 +114,19 @@ public class TravelAgencyPackageCalculator extends JFrame
         topPanel.add(MainTitle);
 
         // -------------------- DISPLAY MAIN TITLE BORDER --------------------------- //
-        add(topPanel, BorderLayout.NORTH);     
+        
+        add(topPanel, BorderLayout.NORTH);   
+        
+        JPanel specialOfferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        specialOfferPanel.add(SpecialOfferLabel);
+
+        // Add both panels to a common panel
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        titlePanel.add(topPanel);
+        titlePanel.add(specialOfferPanel);
+
+        add(titlePanel, BorderLayout.NORTH);
 
         // Packages
         JPanel packagePanel = new JPanel();
@@ -183,6 +198,14 @@ public class TravelAgencyPackageCalculator extends JFrame
         display1.add(packagePanel,BorderLayout.NORTH);
         add(display1, BorderLayout.WEST);   
         
+        // -------------------- DISPLAY SUMMARY --------------------------- //
+
+        JPanel summary = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        summary.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Border line for main title
+        summary.add(resit);
+        summary.add(selectButton);
+        
+        add(summary, BorderLayout.SOUTH);
 
         setVisible(true);
 
@@ -303,7 +326,7 @@ public class TravelAgencyPackageCalculator extends JFrame
                     "\nTotal Adult Price: RM" + total_a +
                     "\nTotal Child Price: RM" + total_c +
                     "\nDuration: 4D3N"+
-                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Van" : (bt2.isSelected() ? "MPV Car" : "None")) +
+                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None")) +
                     "\nTotal Price: RM" + total
             );
         }

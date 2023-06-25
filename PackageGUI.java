@@ -9,16 +9,20 @@ import java.io.IOException;
 
 public class PackageGUI extends JFrame 
 {
-    private JLabel packageLabel ,Atext,Ctext;
-    private JLabel priceLabel;
-    private JLabel selectedPackageLabel;
-    private JComboBox<String> packageComboBox;
-    private JButton selectButton;
-    private JTextArea selectedPackageTextArea;
-    private JTextField numa , numc ;
+    JLabel packageLabel ,Atext,Ctext;
+    JLabel priceLabel;
+    JLabel selectedPackageLabel;
+    JComboBox<String> packageComboBox;
+    JButton selectButton;
+    JTextArea selectedPackageTextArea , cardetail;
+    JTextField numa , numc ;
+    JRadioButton bt1 ,bt2 , bt3;
+    double carprice;
 
-    private String[] packageNames;
-    private double[] packagePrices;
+    String[] packageNames;
+    double[] packagePrices;
+   
+    
 
     public static void main(String[] args) 
     {
@@ -42,36 +46,43 @@ public class PackageGUI extends JFrame
         packageLabel = new JLabel("Package:");
         priceLabel = new JLabel("Price (MYR):");
         selectedPackageLabel = new JLabel("Selected Package:");
-        Atext = new JLabel("Adult Price:");
-        Ctext = new JLabel("Child Price:");
+        Atext = new JLabel("Adult Number:");
+        Ctext = new JLabel("Child Number:");
         numa = new JTextField(6);
         numc = new JTextField(6);
+        cardetail = new JTextArea(4, 10);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Select");
         selectedPackageTextArea = new JTextArea(8, 30);
         selectedPackageTextArea.setEditable(false);
 
-        JMenuBar menuBar = new JMenuBar();
-        
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem openItem = new JMenuItem("Open");
-        JMenuItem saveItem = new JMenuItem("Save");
-        fileMenu.add(openItem);
-        fileMenu.add(saveItem);
-        
-        JMenu editMenu = new JMenu("Edit");
-        JMenuItem cutItem = new JMenuItem("Cut");
-        JMenuItem copyItem = new JMenuItem("Copy");
-        JMenuItem pasteItem = new JMenuItem("Paste");
-        editMenu.add(cutItem);
-        editMenu.add(copyItem);
-        editMenu.add(pasteItem);
-        
-        menuBar.add(fileMenu);
-        menuBar.add(editMenu);
-        
-        setJMenuBar(menuBar);
+        bt1 = new JRadioButton("Van");
+        bt2 = new JRadioButton("MPV Car");
+        bt3 = new JRadioButton("None");
 
+        
+
+        // Menu bae=====================================================
+            JMenuBar menuBar = new JMenuBar();
+            JMenu fileMenu = new JMenu("File");
+            JMenuItem openItem = new JMenuItem("Open");
+            JMenuItem saveItem = new JMenuItem("Save");
+            fileMenu.add(openItem);
+            fileMenu.add(saveItem);
+            
+            JMenu editMenu = new JMenu("Edit");
+            JMenuItem cutItem = new JMenuItem("Cut");
+            JMenuItem copyItem = new JMenuItem("Copy");
+            JMenuItem pasteItem = new JMenuItem("Paste");
+            editMenu.add(cutItem);
+            editMenu.add(copyItem);
+            editMenu.add(pasteItem);
+            
+            menuBar.add(fileMenu);
+            menuBar.add(editMenu);
+            
+            setJMenuBar(menuBar);
+        //===============================================================
         
 
         add(packageLabel);
@@ -84,12 +95,25 @@ public class PackageGUI extends JFrame
         add(numa);
         add(Ctext);
         add(numc);
+        add(bt1);
+        add(bt2);
+        add(bt3);
+        add(cardetail);
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(bt1);
+        bg.add(bt2);
+        bg.add(bt3);
+
+        
 
         setVisible(true);
 
         loadPackages();
 
-        selectButton.addActionListener(new ActionListener() {
+
+        packageComboBox.addActionListener(new ActionListener() 
+        {
             @Override
             public void actionPerformed(ActionEvent e) 
             {
@@ -98,25 +122,24 @@ public class PackageGUI extends JFrame
                 {
                     String selectedPackage = packageNames[selectedIndex];
                     double selectedPrice = packagePrices[selectedIndex];
-                    Double enter_a = Double.parseDouble(numa.getText());
-                    Double enter_c = Double.parseDouble(numc.getText());
-                    double total_a = enter_a * selectedPrice;
-                    double total_c = enter_c * (selectedPrice * 0.70);
-                    Double total_num = total_a + total_c;
+                    // Double enter_a = Double.parseDouble(numa.getText());
+                    // Double enter_c = Double.parseDouble(numc.getText());
+                    double total_a = selectedPrice;
+                    double total_c = selectedPrice * 0.70 ;
 
                     selectedPackageTextArea.setText
                     (
                         "Package: " + selectedPackage + 
                         "\nPrice for Adult: " + total_a + 
                         "MYR\nPrice for Child: " + total_c + 
-                        "MYR\nDuration: 4D3N" + 
-                        "\nThe total Price: " + total_num
-
+                        "MYR\nDuration: 4D3N" 
                     );
                 }
 
             }
         });
+
+        
 
     }
 

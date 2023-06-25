@@ -48,7 +48,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         Font f2 = new Font("Serif", Font.BOLD, 26);
 
         setTitle("Travel Agency Package Calculator");
-        setSize(700, 850);
+        setSize(900, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());

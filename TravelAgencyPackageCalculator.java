@@ -369,11 +369,11 @@ public class TravelAgencyPackageCalculator extends JFrame
             );
 
             ta2.append(
-                "RM" + total_a
+                "RM" + String.format("%.2f", total_a)
             );
 
             ta3.append(
-                "RM" + total_c
+                "RM" + String.format("%.2f", total_c)
             );
 
             ta4.append(
@@ -385,7 +385,7 @@ public class TravelAgencyPackageCalculator extends JFrame
             );
 
             ta6.append(
-                "RM" + total
+                "RM" + String.format("%.2f", total)
             );
         }
     }

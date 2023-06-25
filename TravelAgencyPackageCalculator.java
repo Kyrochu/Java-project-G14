@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +27,6 @@ public class TravelAgencyPackageCalculator extends JFrame
     JRadioButton bt1 ,bt2 , bt3;
     JLabel lb1 , lb2 ,lb3 ,lb4,lb5,lb6;
     JTextArea ta1 , ta2 ,ta3 ,ta4 ,ta5,ta6;
-
     double carprice;
 
     String[] packageNames;
@@ -44,11 +45,11 @@ public class TravelAgencyPackageCalculator extends JFrame
 
     public TravelAgencyPackageCalculator() 
     {
-        Font f1 = new Font("Dialog", Font.BOLD | Font.ITALIC, 30); // SET FONT
+        Font f1 = new Font("Dialog", Font.BOLD | Font.ITALIC, 29); // SET FONT
         Font f2 = new Font("Serif", Font.BOLD, 26);
 
         setTitle("Travel Agency Package Calculator");
-        setSize(900, 850);
+        setSize(900, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
@@ -78,7 +79,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         selectedPackageTextArea.setEditable(false);
         resit = new JTextArea(10, 40);
         resit.setEditable(false);
-
+        
         lb1 = new JLabel("Selected Package :");
         ta1 = new JTextArea(1, 15);
         ta1.setEditable(false);
@@ -142,7 +143,9 @@ public class TravelAgencyPackageCalculator extends JFrame
         // -------------------- DISPLAY MAIN TITLE BORDER --------------------------- //
         
         add(topPanel, BorderLayout.NORTH);   
-        
+         TitledBorder titledBorder = BorderFactory.createTitledBorder("Special Offers");
+        titledBorder.setTitleJustification(TitledBorder.LEFT);
+        titledBorder.setTitlePosition(TitledBorder.TOP);
         JPanel specialOfferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         specialOfferPanel.add(SpecialOfferLabel);
 
@@ -202,11 +205,14 @@ public class TravelAgencyPackageCalculator extends JFrame
         JPanel radiobtn = new JPanel(new FlowLayout(FlowLayout.LEFT));
         radiobtn.add(bt1);
         radiobtn.add(bt2);
+        
+        ImageIcon Na = new ImageIcon(getClass().getResource("None.png"));
+        JLabel NoneIcon = new JLabel(Na);
         radiobtn.add(bt3);
-
+        radiobtn.add(NoneIcon);
+        
         post.gridx = 1;
         post.gridy = 4;
-        
         packagePanel.add(radiobtn, post);
 
         post.gridx = 0;
@@ -216,6 +222,10 @@ public class TravelAgencyPackageCalculator extends JFrame
         post.gridx = 1;
         post.gridy = 5;
         packagePanel.add(cardetail,post);
+
+        post.gridx = 2;
+        post.gridy = 5;
+        packagePanel.add(selectButton,post);
         
         // -------------------- DISPLAY PACKAGE BORDER --------------------------- //
 
@@ -226,27 +236,71 @@ public class TravelAgencyPackageCalculator extends JFrame
         
         // -------------------- DISPLAY SUMMARY --------------------------- //
 
-        JPanel summary = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        summary.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Border line for main title
-        summary.add(lb1);
-        summary.add(ta1);
-        summary.add(lb2);
-        summary.add(ta2);
-        summary.add(lb3);
-        summary.add(ta3);
-        summary.add(lb4);
-        summary.add(ta4);
-        summary.add(lb5);
-        summary.add(ta5);
-        summary.add(lb6);
-        summary.add(ta6);
-        summary.add(selectButton);
-        
-        add(summary, BorderLayout.SOUTH);
+        GridBagConstraints place = new GridBagConstraints();
+        place.anchor = GridBagConstraints.WEST;
+        place.insets = new Insets(10, 10, 10, 10); // Spacing around components
+
+        // Create sumPanel with GridBagLayout
+        JPanel sumPanel = new JPanel(new GridBagLayout());
+        TitledBorder sumtitle = BorderFactory.createTitledBorder("SUMMARY");
+        sumtitle.setTitleFont(f2);
+        sumtitle.setTitleColor(Color.BLUE);
+        sumPanel.setBorder(sumtitle);
+
+        // Add components to sumPanel with GridBagConstraints
+        place.gridx = 0;
+        place.gridy = 0;
+        sumPanel.add(lb1, place);
+
+        place.gridx = 1;
+        place.gridy = 0;
+        sumPanel.add(ta1, place);
+
+        place.gridx = 0;
+        place.gridy = 1;
+        sumPanel.add(lb4, place);
+
+        place.gridx = 1;
+        place.gridy = 1;
+        sumPanel.add(ta4, place);
+
+        place.gridx = 0;
+        place.gridy = 2;
+        sumPanel.add(lb2, place);
+
+        place.gridx = 1;
+        place.gridy = 2;
+        sumPanel.add(ta2, place);
+
+        place.gridx = 0;
+        place.gridy = 3;
+        sumPanel.add(lb3, place);
+
+        place.gridx = 1;
+        place.gridy = 3;
+        sumPanel.add(ta3, place);
+
+        place.gridx = 0;
+        place.gridy = 4;
+        sumPanel.add(lb5, place);
+
+        place.gridx = 1;
+        place.gridy = 4;
+        sumPanel.add(ta5, place);
+
+        place.gridx = 0;
+        place.gridy = 5;
+        sumPanel.add(lb6, place);
+
+        place.gridx = 1;
+        place.gridy = 5;
+        sumPanel.add(ta6, place);
+
+        add(sumPanel, BorderLayout.SOUTH);
 
         setVisible(true);
 
-        loadPackages(); // Calling Function
+       loadPackages(); // Calling Function
 
         // ActionListener for the packageComboBox
         packageComboBox.addActionListener(new ActionListener() 

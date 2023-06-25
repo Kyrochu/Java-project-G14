@@ -54,7 +54,7 @@ public class calculate extends JFrame
         cardetail.setText("1.Van - RM 1800\n2.MPV Car - RM 1200\n3.None");
         cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
-        selectButton = new JButton("Select");
+        selectButton = new JButton("Calculate");
         selectedPackageTextArea = new JTextArea(8, 30);
         selectedPackageTextArea.setEditable(false);
         resit = new JTextArea(8, 20);

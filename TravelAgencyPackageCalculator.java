@@ -332,8 +332,8 @@ public class TravelAgencyPackageCalculator extends JFrame
 
             selectedPackageTextArea.setText(
                     "Package: " + selectedPackage +
-                    "\nAdult Price/person: RM" + total_a +
-                    "\nChild Price/person: RM" + total_c +
+                    "\nAdult Price/person: RM" + String.format("%.2f", total_a) +
+                    "\nChild Price/person: RM" + String.format("%.2f", total_c) +
                     "\nDuration: 4D3N"
             );
         }

@@ -326,7 +326,8 @@ public class TravelAgencyPackageCalculator extends JFrame
         packageComboBox.addActionListener(new ActionListener() 
         {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) 
+            {
                 calculatePackage();
             }
         });
@@ -335,7 +336,8 @@ public class TravelAgencyPackageCalculator extends JFrame
         selectButton.addActionListener(new ActionListener() 
         {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) 
+            {
                 calculateTotal();
             }
         });
@@ -391,7 +393,9 @@ public class TravelAgencyPackageCalculator extends JFrame
 
             packageReader.close();
             priceReader.close();
-        } catch (IOException e) {
+        } 
+        catch (IOException e) 
+        {
             e.printStackTrace();
         }
     }
@@ -422,6 +426,7 @@ public class TravelAgencyPackageCalculator extends JFrame
             } 
             catch (NumberFormatException e) 
             {
+                // Exception handling when User does not enter input / wrong input
                 JOptionPane.showMessageDialog(this, "Please enter only numeric values for Adult and Child! DONT LEAVE BLANK!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -441,22 +446,25 @@ public class TravelAgencyPackageCalculator extends JFrame
                 
                 if (!bt1.isSelected() && !bt2.isSelected() && !bt3.isSelected()) 
                 {
-                    // Display error dialog if no radio button is selected
+                    // Error dialog will be displayed if Transportation option is not choosen
                     JOptionPane.showMessageDialog(this, "Please select a transportation option!", "Transportation Selection", JOptionPane.ERROR_MESSAGE);
-                    return; // Stop further execution
+                    return; // Stop execution
                 }
                 
                 double total_a = selectedPrice * enter_a;
                 double total_c = enter_c * (selectedPrice * 0.70);
                 double total = total_a + total_c;
                 
-                if (bt1.isSelected()) {
-                    total += 1800; // Additional cost for Van
-                } else if (bt2.isSelected()) {
-                    total += 1200; // Additional cost for MPV Car
+                if (bt1.isSelected()) 
+                {
+                    total += 1800; // Van Price
+                } 
+                else if (bt2.isSelected()) 
+                {
+                    total += 1200; // MPV car Price
                 }
                 
-                // Update the text areas with the calculated values
+                // Summary Text Area
                 ta1.setText(selectedPackage);
                 ta2.setText("RM" + String.format("%.2f", total_a));
                 ta3.setText("RM" + String.format("%.2f", total_c));
@@ -467,7 +475,7 @@ public class TravelAgencyPackageCalculator extends JFrame
             } 
             catch (NumberFormatException e) 
             {
-                // Handle the exception when non-numeric input is entered
+                // Exception handling when User does not enter input / wrong input
                 JOptionPane.showMessageDialog(this, "Please enter only numeric values for Adult and Child! DONT LEAVE BLANK!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
         }

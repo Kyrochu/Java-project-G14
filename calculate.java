@@ -88,7 +88,6 @@ public class calculate extends JFrame
         add(packageLabel);
         add(packageComboBox);
         add(priceLabel);
-        add(selectButton);
         add(selectedPackageLabel);
         add(selectedPackageTextArea);
         add(Atext);
@@ -99,6 +98,7 @@ public class calculate extends JFrame
         add(bt2);
         add(bt3);
         add(cardetail);
+        add(selectButton);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(bt1);
@@ -112,32 +112,23 @@ public class calculate extends JFrame
         loadPackages();
 
 
-        packageComboBox.addActionListener(new ActionListener() 
-        {
+        // ActionListener for the packageComboBox
+        packageComboBox.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                int selectedIndex = packageComboBox.getSelectedIndex();
-                if (selectedIndex >= 0) 
-                {
-                    String selectedPackage = packageNames[selectedIndex];
-                    double selectedPrice = packagePrices[selectedIndex];
-                    // Double enter_a = Double.parseDouble(numa.getText());
-                    // Double enter_c = Double.parseDouble(numc.getText());
-                    double total_a = selectedPrice;
-                    double total_c = selectedPrice * 0.70 ;
-
-                    selectedPackageTextArea.setText
-                    (
-                        "Package: " + selectedPackage + 
-                        "\nPrice for Adult: " + total_a + 
-                        "MYR\nPrice for Child: " + total_c + 
-                        "MYR\nDuration: 4D3N" 
-                    );
-                }
-
+            public void actionPerformed(ActionEvent e) {
+                calculatePackage();
             }
         });
+
+        // ActionListener for the selectButton
+        selectButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculateTotal();
+            }
+        });
+
+        
 
         
 
@@ -197,5 +188,46 @@ public class calculate extends JFrame
         }
     }
 
-    
+    private void calculatePackage() {
+        int selectedIndex = packageComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String selectedPackage = packageNames[selectedIndex];
+            double selectedPrice = packagePrices[selectedIndex];
+            double total_a = selectedPrice;
+            double total_c = selectedPrice * 0.70;
+
+            selectedPackageTextArea.setText(
+                    "Package: " + selectedPackage +
+                    "\nPrice for Adult: " + total_a + " MYR" +
+                    "\nPrice for Child: " + total_c + " MYR" +
+                    "\nDuration: 4D3N"
+            );
+        }
+    }
+
+    private void calculateTotal() {
+        int selectedIndex = packageComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String selectedPackage = packageNames[selectedIndex];
+            double selectedPrice = packagePrices[selectedIndex];
+            double total_a = selectedPrice;
+            double total_c = selectedPrice * 0.70;
+
+            if (bt1.isSelected()) {
+                total_a += 100; // Additional cost for Van
+            } else if (bt2.isSelected()) {
+                total_a += 200; // Additional cost for MPV Car
+            }
+
+            int adultCount = Integer.parseInt(numa.getText());
+            int childCount = Integer.parseInt(numc.getText());
+
+            double totalPrice = (total_a * adultCount) + (total_c * childCount);
+
+            cardetail.append(
+                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Van" : (bt2.isSelected() ? "MPV Car" : "None")) +
+                    "\nTotal Price: " + totalPrice + " MYR"
+            );
+        }
+    }
 }

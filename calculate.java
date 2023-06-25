@@ -51,7 +51,7 @@ public class calculate extends JFrame
         numa = new JTextField(6);
         numc = new JTextField(6);
         cardetail = new JTextArea(4, 10);
-        cardetail.setText("1.Van - RM 1800\n2.MPV Car - RM 1000\n3.None");
+        cardetail.setText("1.Van - RM 1800\n2.MPV Car - RM 1200\n3.None");
         cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Select");

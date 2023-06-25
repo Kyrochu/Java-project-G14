@@ -14,7 +14,7 @@ public class calculate extends JFrame
     JLabel selectedPackageLabel;
     JComboBox<String> packageComboBox;
     JButton selectButton;
-    JTextArea selectedPackageTextArea , cardetail;
+    JTextArea selectedPackageTextArea , cardetail , resit;
     JTextField numa , numc ;
     JRadioButton bt1 ,bt2 , bt3;
     double carprice;
@@ -51,10 +51,14 @@ public class calculate extends JFrame
         numa = new JTextField(6);
         numc = new JTextField(6);
         cardetail = new JTextArea(4, 10);
+        cardetail.setText("1.Van - RM 1800\n2.MPV Car - RM 1000\n3.None");
+        cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Select");
         selectedPackageTextArea = new JTextArea(8, 30);
         selectedPackageTextArea.setEditable(false);
+        resit = new JTextArea(8, 20);
+        resit.setEditable(false);
 
         bt1 = new JRadioButton("Van");
         bt2 = new JRadioButton("MPV Car");
@@ -99,6 +103,7 @@ public class calculate extends JFrame
         add(bt3);
         add(cardetail);
         add(selectButton);
+        add(resit);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(bt1);
@@ -210,23 +215,27 @@ public class calculate extends JFrame
         if (selectedIndex >= 0) {
             String selectedPackage = packageNames[selectedIndex];
             double selectedPrice = packagePrices[selectedIndex];
-            double total_a = selectedPrice;
-            double total_c = selectedPrice * 0.70;
+            Double enter_a = Double.parseDouble(numa.getText());
+            Double enter_c = Double.parseDouble(numc.getText());
+            double total_a = selectedPrice * enter_a;
+            double total_c = enter_c * (selectedPrice * 0.70);
+            double total = total_a + total_c;
 
             if (bt1.isSelected()) {
-                total_a += 100; // Additional cost for Van
+                total += 1800; // Additional cost for Van
             } else if (bt2.isSelected()) {
-                total_a += 200; // Additional cost for MPV Car
+                total += 1200; // Additional cost for MPV Car
             }
 
-            int adultCount = Integer.parseInt(numa.getText());
-            int childCount = Integer.parseInt(numc.getText());
+            resit.setText("");
 
-            double totalPrice = (total_a * adultCount) + (total_c * childCount);
-
-            cardetail.append(
+            resit.append(
+                    "\nPackage: " + selectedPackage +
+                    "\nPrice for Adult: " + total_a + " MYR" +
+                    "\nPrice for Child: " + total_c + " MYR" +
+                    "\nDuration: 4D3N"+
                     "\nSelected Vehicle: " + (bt1.isSelected() ? "Van" : (bt2.isSelected() ? "MPV Car" : "None")) +
-                    "\nTotal Price: " + totalPrice + " MYR"
+                    "\nTotal Price: " + total + " MYR"
             );
         }
     }

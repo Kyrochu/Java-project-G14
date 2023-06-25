@@ -376,72 +376,80 @@ public class TravelAgencyPackageCalculator extends JFrame
         }
     }
 
-    private void calculatePackage() {
+    private void showErrorDialog(String message) 
+    {
+        JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void calculatePackage() 
+    {
         int selectedIndex = packageComboBox.getSelectedIndex();
-        if (selectedIndex >= 0) {
+        if (selectedIndex >= 0) 
+        {
             String selectedPackage = packageNames[selectedIndex];
             double selectedPrice = packagePrices[selectedIndex];
-            double total_a = selectedPrice;
-            double total_c = selectedPrice * 0.70;
-
-            selectedPackageTextArea.setText(
+            try 
+            {
+                double total_a = selectedPrice;
+                double total_c = selectedPrice * 0.70;
+                
+                selectedPackageTextArea.setText(
                     "Package: " + selectedPackage +
                     "\nAdult Price/person: RM" + String.format("%.2f", total_a) +
                     "\nChild Price/person: RM" + String.format("%.2f", total_c) +
                     "\nDuration: 4D3N"
-            );
+                );
+            } 
+            catch (NumberFormatException e) 
+            {
+                JOptionPane.showMessageDialog(this, "Please enter valid numeric values for number of adults and children.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
-    private void calculateTotal() {
+
+    private void calculateTotal() 
+    {
         int selectedIndex = packageComboBox.getSelectedIndex();
         if (selectedIndex >= 0) {
             String selectedPackage = packageNames[selectedIndex];
             double selectedPrice = packagePrices[selectedIndex];
-            Double enter_a = Double.parseDouble(numa.getText());
-            Double enter_c = Double.parseDouble(numc.getText());
-            double total_a = selectedPrice * enter_a;
-            double total_c = enter_c * (selectedPrice * 0.70);
-            double total = total_a + total_c;
-
-            if (bt1.isSelected()) {
-                total += 1800; // Additional cost for Van
-            } else if (bt2.isSelected()) {
-                total += 1200; // Additional cost for MPV Car
+            
+            try 
+            {
+                double enter_a = Double.parseDouble(numa.getText());
+                double enter_c = Double.parseDouble(numc.getText());
+                
+                if (!bt1.isSelected() && !bt2.isSelected() && !bt3.isSelected()) {
+                    // Display error dialog if no radio button is selected
+                    JOptionPane.showMessageDialog(this, "Please select a transportation option.", "Transportation Selection", JOptionPane.ERROR_MESSAGE);
+                    return; // Stop further execution
+                }
+                
+                double total_a = selectedPrice * enter_a;
+                double total_c = enter_c * (selectedPrice * 0.70);
+                double total = total_a + total_c;
+                
+                if (bt1.isSelected()) {
+                    total += 1800; // Additional cost for Van
+                } else if (bt2.isSelected()) {
+                    total += 1200; // Additional cost for MPV Car
+                }
+                
+                // Update the text areas with the calculated values
+                ta1.setText(selectedPackage);
+                ta2.setText("RM" + String.format("%.2f", total_a));
+                ta3.setText("RM" + String.format("%.2f", total_c));
+                ta4.setText("4D3N");
+                ta5.setText(bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None"));
+                ta6.setText("RM" + String.format("%.2f", total));
+                
+            } 
+            catch (NumberFormatException e) 
+            {
+                // Handle the exception when non-numeric input is entered
+                JOptionPane.showMessageDialog(this, "Please enter valid numeric values for number of adults and children.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
-
-            //resit.setText("");
-            ta1.setText("");
-            ta2.setText("");
-            ta3.setText("");
-            ta4.setText("");
-            ta5.setText("");
-            ta6.setText("");
-
-            ta1.append(
-                selectedPackage
-            );
-
-            ta2.append(
-                "RM" + String.format("%.2f", total_a)
-            );
-
-            ta3.append(
-                "RM" + String.format("%.2f", total_c)
-            );
-
-            ta4.append(
-                "4D3N"
-            );
-
-            ta5.append(
-                (bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None")) 
-            );
-
-            ta6.append(
-                "RM" + String.format("%.2f", total)
-            );
         }
     }
-        
 }

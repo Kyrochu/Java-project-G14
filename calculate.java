@@ -6,23 +6,30 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-
 public class calculate extends JFrame 
 {
-    JLabel packageLabel ,Atext,Ctext;
-    JLabel priceLabel;
+    // ## DECLARATION ## //
+
+    // Main Title Declaration
+    JLabel MainTitle, MainIcon;
+    ImageIcon MI = new ImageIcon(getClass().getResource("MainIcon.png"));
+
+    // Packages Declaration
+    JLabel packageLabel, Atext, Ctext,vehicleLabel,TransPriceLabel;
+    JLabel SpecialOfferLabel;
     JLabel selectedPackageLabel;
     JComboBox<String> packageComboBox;
     JButton selectButton;
-    JTextArea selectedPackageTextArea , cardetail , resit;
-    JTextField numa , numc ;
+    JTextArea selectedPackageTextArea, cardetail , resit;
+    JTextField numa, numc;
     JRadioButton bt1 ,bt2 , bt3;
+    JLabel lb1 , lb2 ,lb3 ,lb4,lb5,lb6;
+    JTextArea ta1 , ta2 ,ta3 ,ta4 ,ta5,ta6;
+
     double carprice;
 
     String[] packageNames;
     double[] packagePrices;
-   
-    
 
     public static void main(String[] args) 
     {
@@ -30,95 +37,220 @@ public class calculate extends JFrame
         {
             public void run() 
             {
-                new calculate();
+                new TravelAgencyPackageCalculator();
             }
         });
     }
 
-    public calculate() {
+    public calculate() 
+    {
+        Font f1 = new Font("Dialog", Font.BOLD | Font.ITALIC, 30); // SET FONT
+        Font f2 = new Font("Serif", Font.BOLD, 26);
 
-        setTitle("Travel Packages");
-        setSize(700, 700);
+        setTitle("Travel Agency Package Calculator");
+        setSize(900, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
-        packageLabel = new JLabel("Package:");
-        priceLabel = new JLabel("Price (MYR):");
+        MainIcon = new JLabel(MI);
+        MainTitle = new JLabel("Travelling Packages Calculator For You");
+        MainTitle.setFont(f1);
+
+        SpecialOfferLabel = new JLabel("<html><u>SPECIAL OFFERS</u></html>");
+        SpecialOfferLabel.setFont(f2);
+        SpecialOfferLabel.setForeground(Color.BLUE);
+
+        packageLabel = new JLabel("Packages:");
         selectedPackageLabel = new JLabel("Selected Package:");
-        Atext = new JLabel("Adult Number:");
-        Ctext = new JLabel("Child Number:");
+        Atext = new JLabel("No. of Adult/s:");
+        Ctext = new JLabel("No. of Child/s:");
         numa = new JTextField(6);
         numc = new JTextField(6);
-        cardetail = new JTextArea(4, 10);
-        cardetail.setText("1.Van - RM 1800\n2.MPV Car - RM 1200\n3.None");
+        vehicleLabel = new JLabel("Transportation for rent:");
+        cardetail = new JTextArea(6, 30);
+        TransPriceLabel = new JLabel("Transportation price:");
+        cardetail.setText("1.Comfort Van (8-Seater) -  RM 1800\n\n2.MPV Car -   RM 1200\n\n3.None");
         cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Calculate");
-        selectedPackageTextArea = new JTextArea(8, 30);
+        selectedPackageTextArea = new JTextArea(6, 30);
         selectedPackageTextArea.setEditable(false);
-        resit = new JTextArea(8, 20);
+        resit = new JTextArea(10, 40);
         resit.setEditable(false);
 
-        bt1 = new JRadioButton("Van");
+        lb1 = new JLabel("Selected Package :");
+        ta1 = new JTextArea(1, 15);
+        ta1.setEditable(false);
+        lb2 = new JLabel("Total Adult Price :");
+        ta2 = new JTextArea(1, 15);
+        ta2.setEditable(false);
+        lb3 = new JLabel("Total Child Price :");
+        ta3 = new JTextArea(1, 15);
+        ta3.setEditable(false);
+        lb4 = new JLabel("Duration :");
+        ta4 = new JTextArea(1,15);
+        ta4.setEditable(false);
+        lb5 = new JLabel("Selected Vehicle :");
+        ta5 = new JTextArea(1, 15);
+        ta5.setEditable(false);
+        lb6 = new JLabel("Total Price :");
+        ta6 = new JTextArea(1, 15);
+        ta6.setEditable(false);
+
+        bt1 = new JRadioButton("Comfort Van (8-Seater)");
         bt2 = new JRadioButton("MPV Car");
         bt3 = new JRadioButton("None");
-
-        
-
-        // Menu bae=====================================================
-            JMenuBar menuBar = new JMenuBar();
-            JMenu fileMenu = new JMenu("File");
-            JMenuItem openItem = new JMenuItem("Open");
-            JMenuItem saveItem = new JMenuItem("Save");
-            fileMenu.add(openItem);
-            fileMenu.add(saveItem);
-            
-            JMenu editMenu = new JMenu("Edit");
-            JMenuItem cutItem = new JMenuItem("Cut");
-            JMenuItem copyItem = new JMenuItem("Copy");
-            JMenuItem pasteItem = new JMenuItem("Paste");
-            editMenu.add(cutItem);
-            editMenu.add(copyItem);
-            editMenu.add(pasteItem);
-            
-            menuBar.add(fileMenu);
-            menuBar.add(editMenu);
-            
-            setJMenuBar(menuBar);
-        //===============================================================
-        
-
-        add(packageLabel);
-        add(packageComboBox);
-        add(priceLabel);
-        add(selectedPackageLabel);
-        add(selectedPackageTextArea);
-        add(Atext);
-        add(numa);
-        add(Ctext);
-        add(numc);
-        add(bt1);
-        add(bt2);
-        add(bt3);
-        add(cardetail);
-        add(selectButton);
-        add(resit);
 
         ButtonGroup bg = new ButtonGroup();
         bg.add(bt1);
         bg.add(bt2);
         bg.add(bt3);
 
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem openItem = new JMenuItem("Open");
+        JMenuItem saveItem = new JMenuItem("Save");
+        fileMenu.add(openItem);
+        fileMenu.add(saveItem);
+
+        JMenu editMenu = new JMenu("Edit");
+        JMenuItem cutItem = new JMenuItem("Cut");
+        JMenuItem copyItem = new JMenuItem("Copy");
+        JMenuItem pasteItem = new JMenuItem("Paste");
+
+        // ## DISPLAYING  ## //
+
+        // MenuBar
+        menuBar.add(fileMenu);
+        menuBar.add(editMenu);
+
+        editMenu.add(cutItem);
+        editMenu.add(copyItem);
+        editMenu.add(pasteItem);
+
+        setJMenuBar(menuBar);
+
+        // Main Title
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Border line for main title
+        topPanel.add(MainIcon);
+        topPanel.add(MainTitle);
+
+        // -------------------- DISPLAY MAIN TITLE BORDER --------------------------- //
         
+        add(topPanel, BorderLayout.NORTH);   
+        
+        JPanel specialOfferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        specialOfferPanel.add(SpecialOfferLabel);
+
+        // Add both panels to a common panel
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        titlePanel.add(topPanel);
+        titlePanel.add(specialOfferPanel);
+
+        add(titlePanel, BorderLayout.NORTH);
+
+        // Packages
+        JPanel packagePanel = new JPanel();
+        packagePanel.setLayout(new GridBagLayout());
+
+        GridBagConstraints post = new GridBagConstraints();
+        post.anchor = GridBagConstraints.WEST;
+        post.insets = new Insets(10, 10, 0, 10); // Spacing around components
+
+        // Positioning components in PackagePanel
+        post.gridx = 0;
+        post.gridy = 0;
+        packagePanel.add(packageLabel, post);
+
+        post.gridx = 1;
+        post.gridy = 0;
+        packagePanel.add(packageComboBox, post);
+
+        post.gridx = 0;
+        post.gridy = 1;
+        packagePanel.add(selectedPackageLabel, post);
+
+        post.gridx = 1;
+        post.gridy = 1;
+        packagePanel.add(selectedPackageTextArea,post);
+
+        post.gridx = 0;
+        post.gridy = 2;
+        packagePanel.add(Atext,post);
+
+        post.gridx = 1;
+        post.gridy = 2;
+        packagePanel.add(numa,post);
+
+        post.gridx = 0;
+        post.gridy = 3;
+        packagePanel.add(Ctext, post);
+
+        post.gridx = 1;
+        post.gridy = 3;
+        packagePanel.add(numc, post);
+
+        post.gridx = 0;
+        post.gridy = 4;
+        packagePanel.add(vehicleLabel, post);
+
+        JPanel radiobtn = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        radiobtn.add(bt1);
+        radiobtn.add(bt2);
+        radiobtn.add(bt3);
+
+        post.gridx = 1;
+        post.gridy = 4;
+        
+        packagePanel.add(radiobtn, post);
+
+        post.gridx = 0;
+        post.gridy = 5;
+        packagePanel.add(TransPriceLabel,post);
+
+        post.gridx = 1;
+        post.gridy = 5;
+        packagePanel.add(cardetail,post);
+        
+        // -------------------- DISPLAY PACKAGE BORDER --------------------------- //
+
+        JPanel display1 = new JPanel();
+        display1.setLayout(new BorderLayout());
+        display1.add(packagePanel,BorderLayout.NORTH);
+        add(display1, BorderLayout.WEST);   
+        
+        // -------------------- DISPLAY SUMMARY --------------------------- //
+
+        JPanel summary = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        summary.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Border line for main title
+        summary.add(lb1);
+        summary.add(ta1);
+        summary.add(lb2);
+        summary.add(ta2);
+        summary.add(lb3);
+        summary.add(ta3);
+        summary.add(lb4);
+        summary.add(ta4);
+        summary.add(lb5);
+        summary.add(ta5);
+        summary.add(lb6);
+        summary.add(ta6);
+        summary.add(selectButton);
+        
+        add(summary, BorderLayout.SOUTH);
 
         setVisible(true);
 
-        loadPackages();
-
+        loadPackages(); // Calling Function
 
         // ActionListener for the packageComboBox
-        packageComboBox.addActionListener(new ActionListener() {
+        packageComboBox.addActionListener(new ActionListener() 
+        {
             @Override
             public void actionPerformed(ActionEvent e) {
                 calculatePackage();
@@ -126,21 +258,18 @@ public class calculate extends JFrame
         });
 
         // ActionListener for the selectButton
-        selectButton.addActionListener(new ActionListener() {
+        selectButton.addActionListener(new ActionListener() 
+        {
             @Override
             public void actionPerformed(ActionEvent e) {
                 calculateTotal();
             }
         });
-
         
-
-        
-
     }
 
-
-    private void loadPackages() {
+    private void loadPackages() 
+    {
         try
         {
             BufferedReader packageReader = new BufferedReader(new FileReader("package.txt"));
@@ -203,8 +332,8 @@ public class calculate extends JFrame
 
             selectedPackageTextArea.setText(
                     "Package: " + selectedPackage +
-                    "\nPrice for Adult: " + total_a + " MYR" +
-                    "\nPrice for Child: " + total_c + " MYR" +
+                    "\nAdult Price/person: RM" + String.format("%.2f", total_a) +
+                    "\nChild Price/person: RM" + String.format("%.2f", total_c) +
                     "\nDuration: 4D3N"
             );
         }
@@ -227,16 +356,38 @@ public class calculate extends JFrame
                 total += 1200; // Additional cost for MPV Car
             }
 
-            resit.setText("");
+            //resit.setText("");
+            ta1.setText("");
+            ta2.setText("");
+            ta3.setText("");
+            ta4.setText("");
+            ta5.setText("");
+            ta6.setText("");
 
-            resit.append(
-                    "\nPackage: " + selectedPackage +
-                    "\nPrice for Adult: " + total_a + " MYR" +
-                    "\nPrice for Child: " + total_c + " MYR" +
-                    "\nDuration: 4D3N"+
-                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Van" : (bt2.isSelected() ? "MPV Car" : "None")) +
-                    "\nTotal Price: " + total + " MYR"
+            ta1.append(
+                selectedPackage
+            );
+
+            ta2.append(
+                "RM" + String.format("%.2f", total_a)
+            );
+
+            ta3.append(
+                "RM" + String.format("%.2f", total_c)
+            );
+
+            ta4.append(
+                "4D3N"
+            );
+
+            ta5.append(
+                (bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None")) 
+            );
+
+            ta6.append(
+                "RM" + String.format("%.2f", total)
             );
         }
     }
+        
 }

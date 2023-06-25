@@ -23,6 +23,8 @@ public class TravelAgencyPackageCalculator extends JFrame
     JTextArea selectedPackageTextArea, cardetail , resit;
     JTextField numa, numc;
     JRadioButton bt1 ,bt2 , bt3;
+    JLabel lb1 , lb2 ,lb3 ,lb4,lb5,lb6;
+    JTextArea ta1 , ta2 ,ta3 ,ta4 ,ta5,ta6;
 
     double carprice;
 
@@ -72,14 +74,20 @@ public class TravelAgencyPackageCalculator extends JFrame
         cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
         selectButton = new JButton("Calculate");
-        selectedPackageTextArea = new JTextArea(8, 30);
+        selectedPackageTextArea = new JTextArea(6, 30);
         selectedPackageTextArea.setEditable(false);
-        resit = new JTextArea(8, 20);
+        resit = new JTextArea(10, 40);
         resit.setEditable(false);
+        
 
         bt1 = new JRadioButton("Comfort Van (8-Seater)");
         bt2 = new JRadioButton("MPV Car");
         bt3 = new JRadioButton("None");
+
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(bt1);
+        bg.add(bt2);
+        bg.add(bt3);
 
 
         JMenuBar menuBar = new JMenuBar();

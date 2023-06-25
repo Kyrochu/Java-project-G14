@@ -47,6 +47,7 @@ public class TravelAgencyPackageCalculator extends JFrame
     {
         Font f1 = new Font("Dialog", Font.BOLD | Font.ITALIC, 29); // SET FONT
         Font f2 = new Font("Serif", Font.BOLD, 26);
+        Font f3 = new Font("Arial",Font.BOLD,10);
 
         setTitle("Travel Agency Package Calculator");
         setSize(900, 900);
@@ -82,21 +83,32 @@ public class TravelAgencyPackageCalculator extends JFrame
         
         lb1 = new JLabel("Selected Package :");
         ta1 = new JTextArea(1, 15);
+        ta1.setFont(f3);
         ta1.setEditable(false);
+
         lb2 = new JLabel("Total Adult Price :");
         ta2 = new JTextArea(1, 15);
+        ta2.setFont(f3);
         ta2.setEditable(false);
+
         lb3 = new JLabel("Total Child Price :");
         ta3 = new JTextArea(1, 15);
+        ta3.setFont(f3);
         ta3.setEditable(false);
+
         lb4 = new JLabel("Duration :");
         ta4 = new JTextArea(1,15);
+        ta4.setFont(f3);
         ta4.setEditable(false);
+
         lb5 = new JLabel("Selected Vehicle :");
         ta5 = new JTextArea(1, 15);
+        ta5.setFont(f3);
         ta5.setEditable(false);
+
         lb6 = new JLabel("Total Price :");
         ta6 = new JTextArea(1, 15);
+        ta6.setFont(f3);
         ta6.setEditable(false);
 
         bt1 = new JRadioButton("Comfort Van (8-Seater)");
@@ -403,14 +415,14 @@ public class TravelAgencyPackageCalculator extends JFrame
                 
                 selectedPackageTextArea.setText(
                     "Package: " + selectedPackage +
-                    "\nAdult Price/person: RM" + String.format("%.2f", total_a) +
-                    "\nChild Price/person: RM" + String.format("%.2f", total_c) +
-                    "\nDuration: 4D3N"
+                    "\n\nAdult Price/person: RM" + String.format("%.2f", total_a) +
+                    "\n\nChild Price/person: RM" + String.format("%.2f", total_c) +
+                    "\n\nDuration: 4D3N"
                 );
             } 
             catch (NumberFormatException e) 
             {
-                JOptionPane.showMessageDialog(this, "Please enter valid numeric values for number of adults and children.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please enter only numeric values for Adult and Child! DONT LEAVE BLANK!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -430,7 +442,7 @@ public class TravelAgencyPackageCalculator extends JFrame
                 if (!bt1.isSelected() && !bt2.isSelected() && !bt3.isSelected()) 
                 {
                     // Display error dialog if no radio button is selected
-                    JOptionPane.showMessageDialog(this, "Please select a transportation option.", "Transportation Selection", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Please select a transportation option!", "Transportation Selection", JOptionPane.ERROR_MESSAGE);
                     return; // Stop further execution
                 }
                 
@@ -456,7 +468,7 @@ public class TravelAgencyPackageCalculator extends JFrame
             catch (NumberFormatException e) 
             {
                 // Handle the exception when non-numeric input is entered
-                JOptionPane.showMessageDialog(this, "Please enter valid numeric values for number of adults and children.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Please enter only numeric values for Adult and Child! DONT LEAVE BLANK!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

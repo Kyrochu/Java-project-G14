@@ -1,6 +1,12 @@
+// GROUP 14
+// TRAVEL AGENCY PACKAGE CALCULATOR
+// 1211205395 BRIAN LEE CHONG MING
+// 1211205392 CHU WEI WANG
+// 1211205394 JAMES LEW MING REN 
+// 1211205588 YU BUI XUAN
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,7 +16,7 @@ import java.io.IOException;
 
 public class TravelAgencyPackageCalculator extends JFrame 
 {
-    // ## DECLARATION ## //
+    // =================== DECLARATION ======================= //
 
     // Main Title Declaration
     JLabel MainTitle, MainIcon;
@@ -49,11 +55,14 @@ public class TravelAgencyPackageCalculator extends JFrame
         Font f2 = new Font("Serif", Font.BOLD, 26);
         Font f3 = new Font("Arial",Font.BOLD,10);
 
+        
         setTitle("Travel Agency Package Calculator");
         setSize(900, 900);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+        // =================== SET TEXT AND ICON ======================= //
 
         MainIcon = new JLabel(MI);
         MainTitle = new JLabel("Travelling Packages Calculator For You");
@@ -134,7 +143,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         JMenuItem copyItem = new JMenuItem("Copy");
         JMenuItem pasteItem = new JMenuItem("Paste");
 
-        // ## DISPLAYING  ## //
+        // =================== DISPLAY MENUBAR AND MAIN TITLE ======================= //
 
         // MenuBar
         menuBar.add(fileMenu);
@@ -155,7 +164,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         // -------------------- DISPLAY MAIN TITLE BORDER --------------------------- //
         
         add(topPanel, BorderLayout.NORTH);   
-         TitledBorder titledBorder = BorderFactory.createTitledBorder("Special Offers");
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Special Offers");
         titledBorder.setTitleJustification(TitledBorder.LEFT);
         titledBorder.setTitlePosition(TitledBorder.TOP);
         JPanel specialOfferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -169,7 +178,8 @@ public class TravelAgencyPackageCalculator extends JFrame
 
         add(titlePanel, BorderLayout.NORTH);
 
-        // Packages
+        // =================== DISPLAY PACKAGES , NO OF ADULT & CHILD and MORE ======================= //
+
         JPanel packagePanel = new JPanel();
         packagePanel.setLayout(new GridBagLayout());
 
@@ -246,28 +256,25 @@ public class TravelAgencyPackageCalculator extends JFrame
         post.gridx = 2;
         post.gridy = 5;
         packagePanel.add(selectButton,post);
-        
-        // -------------------- DISPLAY PACKAGE BORDER --------------------------- //
 
         JPanel display1 = new JPanel();
         display1.setLayout(new BorderLayout());
         display1.add(packagePanel,BorderLayout.NORTH);
         add(display1, BorderLayout.WEST);   
         
-        // -------------------- DISPLAY SUMMARY --------------------------- //
+        // =================== DISPLAY SUMMARY ======================= //
 
         GridBagConstraints place = new GridBagConstraints();
         place.anchor = GridBagConstraints.WEST;
         place.insets = new Insets(10, 10, 10, 10); // Spacing around components
 
-        // Create sumPanel with GridBagLayout
+        // sumPanel with GridBagLayout
         JPanel sumPanel = new JPanel(new GridBagLayout());
         TitledBorder sumtitle = BorderFactory.createTitledBorder("SUMMARY");
         sumtitle.setTitleFont(f2);
         sumtitle.setTitleColor(Color.BLUE);
         sumPanel.setBorder(sumtitle);
 
-        // Add components to sumPanel with GridBagConstraints
         place.gridx = 0;
         place.gridy = 0;
         sumPanel.add(lb1, place);

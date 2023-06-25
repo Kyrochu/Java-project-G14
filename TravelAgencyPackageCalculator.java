@@ -78,7 +78,25 @@ public class TravelAgencyPackageCalculator extends JFrame
         selectedPackageTextArea.setEditable(false);
         resit = new JTextArea(10, 40);
         resit.setEditable(false);
-        
+
+        lb1 = new JLabel("Selected Package :");
+        ta1 = new JTextArea(1, 15);
+        ta1.setEditable(false);
+        lb2 = new JLabel("Total Adult Price :");
+        ta2 = new JTextArea(1, 15);
+        ta2.setEditable(false);
+        lb3 = new JLabel("Total Child Price :");
+        ta3 = new JTextArea(1, 15);
+        ta3.setEditable(false);
+        lb4 = new JLabel("Duration :");
+        ta4 = new JTextArea(1,15);
+        ta4.setEditable(false);
+        lb5 = new JLabel("Selected Vehicle :");
+        ta5 = new JTextArea(1, 15);
+        ta5.setEditable(false);
+        lb6 = new JLabel("Total Price :");
+        ta6 = new JTextArea(1, 15);
+        ta6.setEditable(false);
 
         bt1 = new JRadioButton("Comfort Van (8-Seater)");
         bt2 = new JRadioButton("MPV Car");
@@ -210,7 +228,18 @@ public class TravelAgencyPackageCalculator extends JFrame
 
         JPanel summary = new JPanel(new FlowLayout(FlowLayout.LEFT));
         summary.setBorder(BorderFactory.createLineBorder(Color.BLACK));  // Border line for main title
-        summary.add(resit);
+        summary.add(lb1);
+        summary.add(ta1);
+        summary.add(lb2);
+        summary.add(ta2);
+        summary.add(lb3);
+        summary.add(ta3);
+        summary.add(lb4);
+        summary.add(ta4);
+        summary.add(lb5);
+        summary.add(ta5);
+        summary.add(lb6);
+        summary.add(ta6);
         summary.add(selectButton);
         
         add(summary, BorderLayout.SOUTH);
@@ -327,15 +356,36 @@ public class TravelAgencyPackageCalculator extends JFrame
                 total += 1200; // Additional cost for MPV Car
             }
 
-            resit.setText("");
+            //resit.setText("");
+            ta1.setText("");
+            ta2.setText("");
+            ta3.setText("");
+            ta4.setText("");
+            ta5.setText("");
+            ta6.setText("");
 
-            resit.append(
-                    "\nPackage: " + selectedPackage +
-                    "\nTotal Adult Price: RM" + total_a +
-                    "\nTotal Child Price: RM" + total_c +
-                    "\nDuration: 4D3N"+
-                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None")) +
-                    "\nTotal Price: RM" + total
+            ta1.append(
+                selectedPackage
+            );
+
+            ta2.append(
+                "RM" + total_a
+            );
+
+            ta3.append(
+                "RM" + total_c
+            );
+
+            ta4.append(
+                "4D3N"
+            );
+
+            ta5.append(
+                (bt1.isSelected() ? "Comfort Van (8-Seater)" : (bt2.isSelected() ? "MPV Car" : "None")) 
+            );
+
+            ta6.append(
+                "RM" + total
             );
         }
     }

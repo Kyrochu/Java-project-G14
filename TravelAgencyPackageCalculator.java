@@ -203,8 +203,16 @@ public class TravelAgencyPackageCalculator extends JFrame
         packagePanel.add(vehicleLabel, post);
 
         JPanel radiobtn = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        ImageIcon Van = new ImageIcon(getClass().getResource("van.png"));
+        JLabel VanIcon = new JLabel(Van);
         radiobtn.add(bt1);
+        radiobtn.add(VanIcon);
+
+        ImageIcon Mpv = new ImageIcon(getClass().getResource("mpv.png"));
+        JLabel MpvIcon = new JLabel(Mpv);
         radiobtn.add(bt2);
+        radiobtn.add(MpvIcon);
         
         ImageIcon Na = new ImageIcon(getClass().getResource("None.png"));
         JLabel NoneIcon = new JLabel(Na);
@@ -407,7 +415,6 @@ public class TravelAgencyPackageCalculator extends JFrame
         }
     }
 
-
     private void calculateTotal() 
     {
         int selectedIndex = packageComboBox.getSelectedIndex();
@@ -420,7 +427,8 @@ public class TravelAgencyPackageCalculator extends JFrame
                 double enter_a = Double.parseDouble(numa.getText());
                 double enter_c = Double.parseDouble(numc.getText());
                 
-                if (!bt1.isSelected() && !bt2.isSelected() && !bt3.isSelected()) {
+                if (!bt1.isSelected() && !bt2.isSelected() && !bt3.isSelected()) 
+                {
                     // Display error dialog if no radio button is selected
                     JOptionPane.showMessageDialog(this, "Please select a transportation option.", "Transportation Selection", JOptionPane.ERROR_MESSAGE);
                     return; // Stop further execution

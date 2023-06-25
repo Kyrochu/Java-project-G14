@@ -15,13 +15,16 @@ public class TravelAgencyPackageCalculator extends JFrame
     ImageIcon MI = new ImageIcon(getClass().getResource("MainIcon.png"));
 
     // Packages Declaration
-    JLabel packageLabel, Atext, Ctext;
-    JLabel priceLabel;
+    JLabel packageLabel, Atext, Ctext,vehicleLabel,TransPriceLabel;
+    JLabel SpecialOfferLabel;
     JLabel selectedPackageLabel;
     JComboBox<String> packageComboBox;
     JButton selectButton;
-    JTextArea selectedPackageTextArea;
+    JTextArea selectedPackageTextArea, cardetail , resit;
     JTextField numa, numc;
+    JRadioButton bt1 ,bt2 , bt3;
+
+    double carprice;
 
     String[] packageNames;
     double[] packagePrices;
@@ -32,7 +35,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         {
             public void run() 
             {
-                new PackageGUI();
+                new TravelAgencyPackageCalculator();
             }
         });
     }
@@ -51,17 +54,30 @@ public class TravelAgencyPackageCalculator extends JFrame
         MainTitle = new JLabel("Travelling Packages Calculator For You");
         MainTitle.setFont(f1);
 
+        SpecialOfferLabel = new JLabel("Special Offers");
+
         packageLabel = new JLabel("Packages:");
-        priceLabel = new JLabel("Price (MYR):");
         selectedPackageLabel = new JLabel("Selected Package:");
         Atext = new JLabel("No. of Adult/s:");
         Ctext = new JLabel("No. of Child/s:");
         numa = new JTextField(6);
         numc = new JTextField(6);
+        vehicleLabel = new JLabel("Transportation for rent:");
+        cardetail = new JTextArea(6, 30);
+        TransPriceLabel = new JLabel("Transportation price:");
+        cardetail.setText("1.Van -  RM 1800\n\n2.MPV Car -   RM 1200\n\n3.None");
+        cardetail.setEditable(false);
         packageComboBox = new JComboBox<>();
-        selectButton = new JButton("Select");
+        selectButton = new JButton("Calculate");
         selectedPackageTextArea = new JTextArea(8, 30);
         selectedPackageTextArea.setEditable(false);
+        resit = new JTextArea(8, 20);
+        resit.setEditable(false);
+
+        bt1 = new JRadioButton("Van");
+        bt2 = new JRadioButton("MPV Car");
+        bt3 = new JRadioButton("None");
+
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -95,7 +111,7 @@ public class TravelAgencyPackageCalculator extends JFrame
         topPanel.add(MainTitle);
 
         // -------------------- DISPLAY MAIN TITLE BORDER --------------------------- //
-        add(topPanel, BorderLayout.NORTH);      
+        add(topPanel, BorderLayout.NORTH);     
 
         // Packages
         JPanel packagePanel = new JPanel();
@@ -116,35 +132,49 @@ public class TravelAgencyPackageCalculator extends JFrame
 
         post.gridx = 0;
         post.gridy = 1;
-        packagePanel.add(priceLabel, post);
+        packagePanel.add(selectedPackageLabel, post);
 
         post.gridx = 1;
         post.gridy = 1;
-        packagePanel.add(selectButton,post);
-
-        post.gridx = 0;
-        post.gridy = 2;
-        packagePanel.add(selectedPackageLabel,post);
-
-        post.gridx = 1;
-        post.gridy = 2;
         packagePanel.add(selectedPackageTextArea,post);
 
         post.gridx = 0;
-        post.gridy = 3;
-        packagePanel.add(Atext, post);
+        post.gridy = 2;
+        packagePanel.add(Atext,post);
 
         post.gridx = 1;
-        post.gridy = 3;
-        packagePanel.add(numa, post);
+        post.gridy = 2;
+        packagePanel.add(numa,post);
 
         post.gridx = 0;
-        post.gridy = 4;
+        post.gridy = 3;
         packagePanel.add(Ctext, post);
 
         post.gridx = 1;
+        post.gridy = 3;
+        packagePanel.add(numc, post);
+
+        post.gridx = 0;
         post.gridy = 4;
-        packagePanel.add(numc,post);
+        packagePanel.add(vehicleLabel, post);
+
+        JPanel radiobtn = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        radiobtn.add(bt1);
+        radiobtn.add(bt2);
+        radiobtn.add(bt3);
+
+        post.gridx = 1;
+        post.gridy = 4;
+        
+        packagePanel.add(radiobtn, post);
+
+        post.gridx = 0;
+        post.gridy = 5;
+        packagePanel.add(TransPriceLabel,post);
+
+        post.gridx = 1;
+        post.gridy = 5;
+        packagePanel.add(cardetail,post);
         
         // -------------------- DISPLAY PACKAGE BORDER --------------------------- //
 
@@ -152,40 +182,35 @@ public class TravelAgencyPackageCalculator extends JFrame
         display1.setLayout(new BorderLayout());
         display1.add(packagePanel,BorderLayout.NORTH);
         add(display1, BorderLayout.WEST);   
+        
 
         setVisible(true);
 
         loadPackages(); // Calling Function
 
+        // ActionListener for the packageComboBox
+        packageComboBox.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculatePackage();
+            }
+        });
+
+        // ActionListener for the selectButton
         selectButton.addActionListener(new ActionListener() 
         {
             @Override
-            public void actionPerformed(ActionEvent e) 
-            {
-                int selectedIndex = packageComboBox.getSelectedIndex();
-
-                if (selectedIndex >= 0) 
-                {
-                    String selectedPackage = packageNames[selectedIndex];
-                    double selectedPrice = packagePrices[selectedIndex];
-                    Double enter_a = Double.parseDouble(numa.getText());
-                    Double enter_c = Double.parseDouble(numc.getText());
-                    double total_a = enter_a * selectedPrice;
-                    double total_c = enter_c * (selectedPrice * 0.70);
-                    Double total_num = total_a + total_c;
-
-                    selectedPackageTextArea.setText("Package: " + selectedPackage + "\n\nPrice for Adult: RM" + total_a
-                            + "\n\nPrice for Child: RM" + total_c + "\n\nDuration: 4D3N" + "\n\nTotal Price: RM"
-                            + total_num);
-                }
-
+            public void actionPerformed(ActionEvent e) {
+                calculateTotal();
             }
         });
+        
     }
 
-    public void loadPackages() 
+    private void loadPackages() 
     {
-        try 
+        try
         {
             BufferedReader packageReader = new BufferedReader(new FileReader("package.txt"));
             BufferedReader priceReader = new BufferedReader(new FileReader("packagePrice.txt"));
@@ -194,8 +219,8 @@ public class TravelAgencyPackageCalculator extends JFrame
             String priceLine;
             int packageCount = 0;
 
-            while ((packageLine = packageReader.readLine()) != null
-                    && (priceLine = priceReader.readLine()) != null) {
+            while ((packageLine = packageReader.readLine()) != null && (priceLine = priceReader.readLine()) != null) 
+            {
                 String[] packageData = packageLine.split("\\s+");
                 String[] priceData = priceLine.split("\\s+");
 
@@ -216,12 +241,13 @@ public class TravelAgencyPackageCalculator extends JFrame
             priceReader = new BufferedReader(new FileReader("packagePrice.txt"));
 
             int index = 0;
-            while ((packageLine = packageReader.readLine()) != null
-                    && (priceLine = priceReader.readLine()) != null) {
+            while ((packageLine = packageReader.readLine()) != null && (priceLine = priceReader.readLine()) != null) 
+            {
                 String[] packageData = packageLine.split("\\s+");
                 String[] priceData = priceLine.split("\\s+");
 
-                if (packageData.length > 0 && priceData.length > 0) {
+                if (packageData.length > 0 && priceData.length > 0) 
+                {
                     packageNames[index] = packageData[0];
                     if (packageData.length > 0 && priceData.length > 0)
                         packagePrices[index] = Double.parseDouble(priceData[0]);
@@ -231,10 +257,56 @@ public class TravelAgencyPackageCalculator extends JFrame
 
             packageReader.close();
             priceReader.close();
-        } 
-        catch (IOException e) 
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private void calculatePackage() {
+        int selectedIndex = packageComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String selectedPackage = packageNames[selectedIndex];
+            double selectedPrice = packagePrices[selectedIndex];
+            double total_a = selectedPrice;
+            double total_c = selectedPrice * 0.70;
+
+            selectedPackageTextArea.setText(
+                    "Package: " + selectedPackage +
+                    "\nAdult Price/person: RM" + total_a +
+                    "\nChild Price/person: RM" + total_c +
+                    "\nDuration: 4D3N"
+            );
+        }
+    }
+
+    private void calculateTotal() {
+        int selectedIndex = packageComboBox.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            String selectedPackage = packageNames[selectedIndex];
+            double selectedPrice = packagePrices[selectedIndex];
+            Double enter_a = Double.parseDouble(numa.getText());
+            Double enter_c = Double.parseDouble(numc.getText());
+            double total_a = selectedPrice * enter_a;
+            double total_c = enter_c * (selectedPrice * 0.70);
+            double total = total_a + total_c;
+
+            if (bt1.isSelected()) {
+                total += 1800; // Additional cost for Van
+            } else if (bt2.isSelected()) {
+                total += 1200; // Additional cost for MPV Car
+            }
+
+            resit.setText("");
+
+            resit.append(
+                    "\nPackage: " + selectedPackage +
+                    "\nTotal Adult Price: RM" + total_a +
+                    "\nTotal Child Price: RM" + total_c +
+                    "\nDuration: 4D3N"+
+                    "\nSelected Vehicle: " + (bt1.isSelected() ? "Van" : (bt2.isSelected() ? "MPV Car" : "None")) +
+                    "\nTotal Price: RM" + total
+            );
+        }
+    }
+        
 }
